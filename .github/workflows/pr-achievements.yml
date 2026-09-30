@@ -8,7 +8,7 @@ on:
         default: 1
         type: number
   schedule:
-    - cron: "45 9 * * *"
+    - cron: "16 2 * * *"
 
 permissions:
   contents: write
