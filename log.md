@@ -1402,3 +1402,13 @@ But I'd use RGB for you.
 **Fact:** JavaScript was created in 10 days in 1995.
 
 ---
+
+## 2026-11-22 00:12 — added today's entry
+
+**Quote:** "Any fool can write code that a computer can understand. Good programmers write code that humans can understand." — Martin Fowler
+
+**Joke:** How many programmers does it take to change a light bulb? None — that's a hardware problem.
+
+**Fact:** The first computer bug was a literal moth (1947).
+
+---
