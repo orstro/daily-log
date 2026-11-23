@@ -18,31 +18,35 @@ jobs:
   pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ github.token }}
           fetch-depth: 2
 
       - name: randomize next run time
+        continue-on-error: true
         uses: grbnb/random-workflow-cron@v2
         with:
           workflow_name: ".github/workflows/pr-achievements.yml"
-          github_token: ${{ secrets.GH_PAT }}
+          github_token: ${{ secrets.GH_PAT || github.token }}
           push_switch: false
           hour_start: 0
           hour_end: 23
           interval_count: 1
 
       - name: commit randomized schedule
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git add .github/workflows/pr-achievements.yml
-          git commit -m "chore: randomize schedule"
-          git push origin main
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: randomize schedule"
+            git push origin main
+          fi
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
 
       - name: create and merge PRs
         run: |
@@ -93,4 +97,4 @@ jobs:
             fi
           done
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ github.token }}
